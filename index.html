@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elizza Copy Trade . GG</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --background: #0b0912;
+    --card: #15111f;
+    --purple: #9945ff;
+    --purple-light: #b983ff;
+    --text: #ffffff;
+    --muted: #a7a0b5;
+    --border: #30253e;
+}
+body {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #291440 0%,
+            var(--background) 45%
+        );
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    padding: 22px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ffffff0d;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 750;
+    letter-spacing: -0.4px;
+}
+.logo {
+    width: 37px;
+    height: 37px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #b983ff, #7134db);
+    color: white;
+    font-size: 21px;
+    box-shadow: 0 0 25px #9945ff35;
+}
+.brand span {
+    color: var(--purple-light);
+}
+main {
+    width: 100%;
+    max-width: 460px;
+    padding: 25px 20px;
+    margin: auto;
+}
+.card {
+    background: linear-gradient(145deg, #191422, #110e18);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 29px 23px;
+    box-shadow: 0 20px 70px #00000035;
+}
+.screen {
+    display: none;
+}
+.screen.active {
+    display: block;
+    animation: fadeIn .3s ease;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.badge {
+    display: inline-block;
+    padding: 7px 11px;
+    border: 1px solid #9945ff50;
+    border-radius: 20px;
+    color: var(--purple-light);
+    background: #9945ff12;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    font-weight: 700;
+    margin-bottom: 23px;
+}
+h1 {
+    font-size: 29px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 13px;
+}
+.description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 27px;
+}
+.progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 25px;
+}
+.progress span {
+    height: 3px;
+    border-radius: 10px;
+    background: #30253e;
+    flex: 1;
+}
+.progress span.done {
+    background: var(--purple);
+}
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #392b49;
+    border-radius: 12px;
+    background: #0e0b15;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 19px;
+}
+input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #9945ff15;
+}
+input::placeholder {
+    color: #70677d;
+}
+button {
+    width: 100%;
+    padding: 15px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(100deg, #9945ff, #7539db);
+    color: white;
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: .2s;
+}
+button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+}
+.secondary {
+    margin-top: 10px;
+    background: #ffffff08;
+    border: 1px solid var(--border);
+}
+.field-note {
+    font-size: 11px;
+    color: #817890;
+    line-height: 1.6;
+    margin-top: 13px;
+}
+.choice-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.choice {
+    padding: 20px 12px;
+    background: #100c18;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: .2s;
+}
+.choice:hover {
+    border-color: var(--purple);
+    background: #9945ff12;
+}
+.choice strong {
+    display: block;
+    margin-bottom: 7px;
+}
+.choice small {
+    color: var(--muted);
+    font-size: 11px;
+}
+.notice {
+    border: 1px solid #9945ff30;
+    background: #9945ff0d;
+    padding: 15px;
+    border-radius: 12px;
+    color: #c7b3e5;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 20px 0;
+}
+.congrats {
+    width: 68px;
+    height: 68px;
+    border-radius: 22px;
+    background: #9945ff20;
+    border: 1px solid #9945ff70;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    margin-bottom: 23px;
+}
+.extension {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    background: #0d0a14;
+}
+.extension-title {
+    color: var(--purple-light);
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 750;
+    margin-bottom: 10px;
+}
+.extension code {
+    display: block;
+    color: #d9d0e8;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+.status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #9945ff40;
+    background: #9945ff12;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #b983ff;
+    box-shadow: 0 0 12px #9945ff;
+    flex-shrink: 0;
+}
+footer {
+    text-align: center;
+    color: #756c82;
+    font-size: 11px;
+    line-height: 1.8;
+    padding: 20px;
+}
+@media (max-width: 380px) {
+    main {
+        padding: 18px 13px;
+    }
+    .card {
+        padding: 24px 18px;
+    }
+    h1 {
+        font-size: 26px;
+    }
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="brand">
+        <div class="logo">E</div>
+        <div>ELIZZA <span>COPY TRADE</span></div>
+    </div>
+</header>
+<main>
+<div class="card">
+    <!-- SCREEN 1 -->
+    <section class="screen active" id="screen1">
+        <div class="badge">COPY TRADE PORTAL</div>
+        <h1>Welcome to Elizza.</h1>
+        <p class="description">
+            Your copy-trading journey starts here.
+            Continue to explore the demo onboarding process.
+        </p>
+        <div class="notice">
+            This is an independent demonstration interface.
+            No wallet connection or trade execution takes place.
+        </div>
+        <button onclick="goTo(2)">Get Started →</button>
+    </section>
+    <!-- SCREEN 2 -->
+    <section class="screen" id="screen2">
+        <div class="progress">
+            <span class="done"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="badge">STEP 01</div>
+        <h1>Email verification</h1>
+        <p class="description">
+            Enter your email to continue through the demo.
+        </p>
+        <form id="emailForm">
+            <label for="email">Email address</label>
+            <input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+            >
+            <button type="submit">Continue →</button>
+        </form>
+        <p class="field-note">
+            No email is sent and no account is created.
+        </p>
+        <button class="secondary" onclick="goTo(1)">Back</button>
+    </section>
+    <!-- SCREEN 3 -->
+    <section class="screen" id="screen3">
+        <div class="progress">
+            <span class="done"></span>
+            <span class="done"></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="badge">STEP 02</div>
+        <h1>Enter federal code</h1>
+        <p class="description">
+            Enter the demonstration code provided for this experience.
+        </p>
+        <form id="codeForm">
+            <label for="federalCode">Federal code</label>
+            <input
+                id="federalCode"
+                type="text"
+                inputmode="numeric"
+                placeholder="Enter access code"
+                required
+            >
+            <button type="submit">Verify Code →</button>
+            <p id="codeError"
+               role="alert"
+               style="display:none;color:#ff8caa;font-size:12px;margin-top:13px">
+                That code is incorrect. Please try again.
+            </p>
+        </form>
+        <button class="secondary" onclick="goTo(2)">Back</button>
+    </section>
+    <!-- SCREEN 4 -->
+    <section class="screen" id="screen4">
+        <div class="progress">
+            <span class="done"></span>
+            <span class="done"></span>
+            <span class="done"></span>
+            <span></span>
+        </div>
+        <div class="badge">STEP 03</div>
+        <h1>Your trading platform</h1>
+        <p class="description">
+            Do you currently have a FOMO or Pump.fun account?
+        </p>
+        <div class="choice-row">
+            <button class="choice" onclick="chooseAccount(true)">
+                <strong>Yes, I do</strong>
+                <small>I have an account</small>
+            </button>
+            <button class="choice" onclick="chooseAccount(false)">
+                <strong>No, not yet</strong>
+                <small>I don't have one</small>
+            </button>
+        </div>
+        <p class="field-note">
+            Your selection is used only to navigate this demonstration.
+        </p>
+        <button class="secondary" onclick="goTo(3)">Back</button>
+    </section>
+    <!-- SCREEN 5: USERNAME -->
+    <section class="screen" id="screen5">
+        <div class="badge">ACCOUNT DETAILS</div>
+        <h1>Which platform do you use?</h1>
+        <p class="description">
+            Select your platform and enter your public username.
+        </p>
+        <label for="platform">Platform</label>
+        <select id="platform"
+            style="width:100%;padding:15px;border:1px solid #392b49;
+            border-radius:12px;background:#0e0b15;color:white;
+            font-size:15px;margin-bottom:20px">
+            <option value="FOMO">FOMO</option>
+            <option value="Pump.fun">Pump.fun</option>
+        </select>
+        <form id="usernameForm">
+            <label for="username">Public username</label>
+            <input
+                id="username"
+                type="text"
+                maxlength="50"
+                placeholder="Enter your username"
+                required
+            >
+            <button type="submit">Continue →</button>
+        </form>
+        <p class="field-note">
+            Never enter a wallet seed phrase, private key, password,
+            or recovery phrase.
+        </p>
+        <button class="secondary" onclick="goTo(4)">Back</button>
+    </section>
+    <!-- SCREEN 6: NO ACCOUNT -->
+    <section class="screen" id="screen6">
+        <div class="badge">ACCOUNT DETAILS</div>
+        <h1>You're all set to explore.</h1>
+        <p class="description">
+            You indicated that you don't currently have a FOMO or
+            Pump.fun account.
+        </p>
+        <div class="notice">
+            You can return when you're ready to continue.
+            No account or trading connection has been created.
+        </div>
+        <button onclick="finishDemo()">Continue to Demo →</button>
+    </section>
+    <!-- SCREEN 7: CONGRATULATIONS -->
+    <section class="screen" id="screen7">
+        <div class="congrats">✓</div>
+        <div class="badge">ONBOARDING COMPLETE</div>
+        <h1>Congratulations!</h1>
+        <p class="description">
+            You've completed the Elizza Copy Trade to GG
+            demonstration onboarding.
+        </p>
+        <div class="extension">
+            <div class="extension-title">EXTENSION 01</div>
+            <code>aGlwIHByaWNlIGRvdmUgd3JpdGUgYmxpbmQgYXJndWUgc2VnbWVudCBhY2hpZXZlIHdvb2QgYWZmYWlyIHJhY2sgcm9hc3Q</code>
+        </div>
+        <div class="extension">
+            <div class="extension-title">EXTENSION 02</div>
+            <code>ZGVmaW5lIHBvdmVydHkgYW5zd2VyIG1peHR1cmUgdHVpdGlvbiBvYnZpb3VzIHBvbGUgbGFrZSBtYXJpbmUgbWF0Y2ggc21va2UgY3JhdGVy</code>
+        </div>
+        <div class="status">
+            <span class="status-dot"></span>
+            <div>
+                <strong>Congratulations, copy trade is being processed.</strong>
+                <br>
+                Demo status only. No trade has been submitted or executed.
+            </div>
+        </div>
+        <button onclick="restart()">Return to Home</button>
+    </section>
+</div>
+</main>
+<footer>
+    ELIZZA COPY TRADE . GG<br>
+    Independent demonstration · No wallet connection
+</footer>
+<script>
+const FEDERAL_CODE = "802244";
+function goTo(number) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+    document.getElementById("screen" + number).classList.add("active");
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+document.getElementById("emailForm").addEventListener("submit", event => {
+    event.preventDefault();
+    if (document.getElementById("email").validity.valid) {
+        goTo(3);
+    }
+});
+document.getElementById("codeForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const enteredCode = document.getElementById("federalCode").value.trim();
+    const error = document.getElementById("codeError");
+    if (enteredCode === FEDERAL_CODE) {
+        error.style.display = "none";
+        goTo(4);
+    } else {
+        error.style.display = "block";
+    }
+});
+function chooseAccount(hasAccount) {
+    if (hasAccount) {
+        goTo(5);
+    } else {
+        goTo(6);
+    }
+}
+document.getElementById("usernameForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    if (username.length > 0) {
+        goTo(7);
+    }
+});
+function finishDemo() {
+    goTo(7);
+}
+function restart() {
+    document.getElementById("emailForm").reset();
+    document.getElementById("codeForm").reset();
+    document.getElementById("usernameForm").reset();
+    document.getElementById("codeError").style.display = "none";
+    goTo(1);
+}
+</script>
+</body>
+</html>
